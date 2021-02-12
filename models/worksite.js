@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const WorksiteSchema = new Schema({
     title: String,
-    price: String,
+    hours: String,
+    priceRange: String,
     description: String,
     location: String
 });
