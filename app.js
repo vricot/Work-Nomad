@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const Worksite = require('./models/worksite');
 
 mongoose.connect('mongodb://localhost:27017/work-nomad', {
     useNewUrlParser: true,
@@ -22,6 +23,12 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.get('/', (req, res) => {
     res.render('home')
+})
+
+app.get('/addworksite', async (req, res) => {
+    const work = new Worksite({title: 'Cafe Kitty', description: 'Coffee and tea with kittens!' });
+    await work.save();
+    res.send(work)
 })
 
 app.listen(3000, () => {
