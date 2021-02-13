@@ -10,7 +10,7 @@
     <h1>All Workspots</h1>
     <ul>
         <% for (let workspot of allWorkspots) {%>
-            <li><%= workspot.title %></li>
+            <li><a href="/workspots/<%=workspot._id %>"><%= workspot.title %></a></li>
         <% }%>
     </ul>
 </body>
