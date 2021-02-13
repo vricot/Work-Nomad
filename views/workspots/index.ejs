@@ -8,6 +8,9 @@
 
 <body>
     <h1>All Workspots</h1>
+    <div>
+        <a href="/workspots/new">Add A Workspot</a>
+    </div>
     <ul>
         <% for (let workspot of allWorkspots) {%>
             <li><a href="/workspots/<%=workspot._id %>"><%= workspot.title %></a></li>
