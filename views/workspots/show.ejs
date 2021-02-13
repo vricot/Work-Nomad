@@ -9,6 +9,15 @@
 <body>
     <h1><%= workspot.title %></h1>
     <h2><%= workspot.location %></h2>
+    <p>
+        <a href="/workspots/<%=workspot._id%>/edit">Edit</a>
+    </p>
+    <p>
+<!--Find out why DELETE won't execute-->
+        <form action="/workspots/<%=workspot._id%>?_method=DELETE" method="POST">
+            <button>Delete</button>
+        </form>
+    </p>
     <footer>
         <a href="/workspots">All Workspots</a>
     </footer>
