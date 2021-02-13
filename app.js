@@ -25,10 +25,9 @@ app.get('/', (req, res) => {
     res.render('home')
 })
 
-app.get('/addworksite', async (req, res) => {
-    const work = new Worksite({title: 'Cafe Kitty', description: 'Coffee and tea with kittens!' });
-    await work.save();
-    res.send(work)
+app.get('/worksites', async (req, res) => {
+    const allWorksites = await Worksite.find({});
+    res.render('worksites/index', { allWorksites })
 })
 
 app.listen(3000, () => {
