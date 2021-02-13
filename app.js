@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const Worksite = require('./models/worksite');
+const Workspot = require('./models/workspot');
 
 mongoose.connect('mongodb://localhost:27017/work-nomad', {
     useNewUrlParser: true,
@@ -25,9 +25,9 @@ app.get('/', (req, res) => {
     res.render('home')
 })
 
-app.get('/worksites', async (req, res) => {
-    const allWorksites = await Worksite.find({});
-    res.render('worksites/index', { allWorksites })
+app.get('/workspots', async (req, res) => {
+    const allWorkspots = await Workspot.find({});
+    res.render('worksites/index', { allWorkspots })
 })
 
 app.listen(3000, () => {

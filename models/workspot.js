@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const WorksiteSchema = new Schema({
+const WorkspotSchema = new Schema({
     title: String,
     hours: String,
     priceRange: String,
@@ -9,4 +9,4 @@ const WorksiteSchema = new Schema({
     location: String
 });
 
-module.exports = mongoose.model('Worksite', WorksiteSchema);
+module.exports = mongoose.model('Worksite', WorkspotSchema);

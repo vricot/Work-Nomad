@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const cities = require('./cities');
 const {places, descriptors} = require('./seedHelpers');
-const Worksite = require('../models/worksite');
+const Workspot = require('../models/workspot');
 
 
 mongoose.connect('mongodb://localhost:27017/work-nomad', {
@@ -19,14 +19,14 @@ db.once("open", () =>{
 const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
-    await Worksite.deleteMany({});
+    await Workspot.deleteMany({});
     for (let i = 0; i < 50; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
-        const worksite = new Worksite({
+        const workspot = new Workspot({
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`
         })
-        await worksite.save();
+        await workspot.save();
     }
 }
 
