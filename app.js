@@ -31,7 +31,8 @@ app.get('/workspots', async (req, res) => {
 })
 
 app.get('/workspots/:id', async (req, res) => {
-    res.render('workspots/show')
+    const workspot = await Workspot.findById(req.params.id)
+    res.render('workspots/show', { workspot });
 })
 
 app.listen(3000, () => {
