@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 const Workspot = require('./models/workspot');
 
 mongoose.connect('mongodb://localhost:27017/work-nomad', {
@@ -21,7 +22,8 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => {
     res.render('home')
@@ -47,6 +49,22 @@ app.get('/workspots/:id', async (req, res) => {
     res.render('workspots/show', { workspot });
 });
 
+app.get('/workspots/:id/edit', async (req, res) => {
+    const workspot = await Workspot.findById(req.params.id)
+    res.render('workspots/edit', { workspot });
+});
+
+app.put('/workspots/:id', async (req, res) => {
+    const { id } = req.params;
+    const workspot = await Workspot.findByIdAndUpdate(id, { ...req.body.workspot });
+    res.redirect(`/workspots/${workspot._id}`);
+});
+
+app.delete('/workspots/:id', async (req, res) => {
+     const { id } = req.params;
+     await Workspot.findOneAndDelete(id);
+     res.redirect('/workspots');
+});
 
 app.listen(3000, () => {
     console.log('Serving on port 3000')
