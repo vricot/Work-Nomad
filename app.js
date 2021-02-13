@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 
 app.get('/workspots', async (req, res) => {
     const allWorkspots = await Workspot.find({});
-    res.render('worksites/index', { allWorkspots })
+    res.render('workspots/index', { allWorkspots })
 })
 
 app.get('/workspots/:id', async (req, res) => {
