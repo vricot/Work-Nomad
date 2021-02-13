@@ -30,6 +30,10 @@ app.get('/workspots', async (req, res) => {
     res.render('worksites/index', { allWorkspots })
 })
 
+app.get('/workspots/:id', async (req, res) => {
+    res.render('workspots/show')
+})
+
 app.listen(3000, () => {
     console.log('Serving on port 3000')
 })
