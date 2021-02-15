@@ -62,7 +62,7 @@ app.put('/workspots/:id', async (req, res) => {
 
 app.delete('/workspots/:id', async (req, res) => {
      const { id } = req.params;
-     await Workspot.findOneAndDelete(id);
+     await Workspot.findByIdAndDelete(id);
      res.redirect('/workspots');
 });
 
