@@ -1,16 +1,23 @@
 <% layout('layouts/boilerplate')%>
-    <h1><%= workspot.title %></h1>
-    <h2><%= workspot.location %></h2>
-    <img src="<%= workspot.image %>" alt="">
-    <p><%= workspot.description %></p>
-    <p>
-        <a href="/workspots/<%=workspot._id%>/edit">Edit</a>
-    </p>
-    <p>
-        <form action="/workspots/<%=workspot._id%>?_method=DELETE" method="POST">
-            <button>Delete</button>
-        </form>
-    </p>
-    <footer>
-        <a href="/workspots">All Workspots</a>
-    </footer>
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card mb-3">
+            <img src="<%= workspot.image %>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><%=workspot.title%></h5>
+              <p class="card-text"><%=workspot.description%></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-muted"><%=workspot.location%></li>
+              <li class="list-group-item">$<%=workspot.price%> for a cup of coffee</li>
+            </ul>
+            <div class="card-body">
+                <a class="card-link btn btn-info" href="/workspots/<%=workspot._id%>/edit">Edit</a>
+                <form class="d-inline" action="/workspots/<%=workspot._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+          </div>
+    </div>
+</div>
+
