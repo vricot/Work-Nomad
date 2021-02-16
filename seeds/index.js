@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const cities = require('./cities');
 const {places, descriptors} = require('./seedHelpers');
+const { dollarsigns } = require('./dollarRange');
 const Workspot = require('../models/workspot');
 
 
@@ -24,7 +25,10 @@ const seedDB = async () => {
         const random1000 = Math.floor(Math.random() * 1000);
         const workspot = new Workspot({
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
-            title: `${sample(descriptors)} ${sample(places)}`
+            title: `${sample(descriptors)} ${sample(places)}`,
+            image: 'https://source.unsplash.com/collection/81925701',
+            description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque laboriosam totam delectus nesciunt repellendus ut quod similique nostrum accusamus veniam dicta at optio itaque tempora amet quo eaque, nulla obcaecati!',
+            priceRange: `${sample(dollarsigns)}`
         })
         await workspot.save();
     }
