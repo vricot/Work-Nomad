@@ -1,6 +1,8 @@
 <% layout('layouts/boilerplate')%>
     <h1><%= workspot.title %></h1>
     <h2><%= workspot.location %></h2>
+    <img src="<%= workspot.image %>" alt="">
+    <p><%= workspot.description %></p>
     <p>
         <a href="/workspots/<%=workspot._id%>/edit">Edit</a>
     </p>
