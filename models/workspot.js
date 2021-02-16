@@ -5,8 +5,7 @@ const WorkspotSchema = new Schema({
     title: String,
     image: String,
     hours: String,
-    priceRange: String,
-    coffeePrice: Number,
+    price: Number,
     description: String,
     location: String
 });
