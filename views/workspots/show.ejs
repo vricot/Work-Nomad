@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Show</title>
-</head>
-
-<body>
+<% layout('layouts/boilerplate')%>
     <h1><%= workspot.title %></h1>
     <h2><%= workspot.location %></h2>
     <p>
         <a href="/workspots/<%=workspot._id%>/edit">Edit</a>
     </p>
     <p>
-<!--Find out why DELETE won't execute-->
         <form action="/workspots/<%=workspot._id%>?_method=DELETE" method="POST">
             <button>Delete</button>
         </form>
@@ -21,6 +12,3 @@
     <footer>
         <a href="/workspots">All Workspots</a>
     </footer>
-</body>
-
-</html>

@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Edit Workspot</title>
-</head>
-
-<body>
+<% layout('layouts/boilerplate')%>
     <h1>Edit Workspot</h1>
     <form action="/workspots/<%=workspot._id%>?_method=PUT" method="POST">
         <div>
@@ -20,6 +12,3 @@
         <button>Update Workspot</button>
     </form>
     <a href="/workspots/<%= workspot._id%>">Back To Workspot</a>
-</body>
-
-</html>
