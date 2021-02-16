@@ -1,13 +1,36 @@
 <% layout('layouts/boilerplate')%>
-    <form action="/workspots" method="POST">
-        <div>
-            <label for="title">Title</label>
-            <input type="text" name="workspot[title]" id="title">
-        </div>
-        <div>
-            <label for="location">Location</label>
-            <input type="text" name="workspot[location]" id="location">
-        </div>
-        <button>Add Workspot</button>
-    </form>
-    <a href="/workspots">All Workspots</a>
+   <div class="row">
+       <h1 class="text-center">New Workspot</h1>
+       <div class="col-6 offset-3">
+        <form action="/workspots" method="POST">
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" type="text" name="workspot[title]" id="title">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="location">Location</label>
+                <input class="form-control" type="text" name="workspot[location]" id="location">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Image URL</label>
+                <input class="form-control" type="text" name="workspot[image]" id="image">
+            </div>
+<!--Figure out why adding a price won't work-->
+            <div class="mb-3">
+                <label class="form-label" for="coffeePrice">One cup of coffee is:</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="coffeePrice">$</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" type="text" name="workspot[description]" id="description"></textarea>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-success">Add Workspot</button>
+            </div>
+        </form>
+        <a href="/workspots">All Workspots</a>
+    
+       </div>
+   </div>
