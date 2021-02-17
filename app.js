@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
+const catchAsync = require('./utilities/catchAsync');
 const methodOverride = require('method-override');
 const Workspot = require('./models/workspot');
 
@@ -39,11 +40,11 @@ app.get('/workspots/new', (req, res) => {
     res.render('workspots/new');
 });
 
-app.post('/workspots', async (req, res) => {
+app.post('/workspots', catchAsync(async (req, res, next) => {
     const workspot = new Workspot(req.body.workspot);
     await workspot.save();
     res.redirect(`/workspots/${workspot._id}`)
-})
+}))
 
 app.get('/workspots/:id', async (req, res) => {
     const workspot = await Workspot.findById(req.params.id)
@@ -66,6 +67,10 @@ app.delete('/workspots/:id', async (req, res) => {
      await Workspot.findByIdAndDelete(id);
      res.redirect('/workspots');
 });
+
+app.use((err, req, res, next) => {
+    res.send('Oh no, something went wrong!')
+})
 
 app.listen(3000, () => {
     console.log('Serving on port 3000')
