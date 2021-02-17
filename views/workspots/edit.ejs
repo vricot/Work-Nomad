@@ -2,29 +2,41 @@
     <div class="row">
         <h1 class="text-center">Edit Workspot</h1>
         <div class="col-6 offset-3">
-            <form action="/workspots/<%=workspot._id%>?_method=PUT" method="POST">
+            <form action="/workspots/<%=workspot._id%>?_method=PUT" method="POST" novalidate class="validated-form">
                 <div class="mb-3">
                     <label class="form-label" for="title">Title</label>
-                    <input class="form-control" type="text" name="workspot[title]" id="title" value="<%= workspot.title %>">
+                    <input class="form-control" type="text" name="workspot[title]" id="title" value="<%= workspot.title %>"required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="location">Location</label>
-                    <input class="form-control" type="text" name="workspot[location]" id="location" value="<%= workspot.location %>">
+                    <input class="form-control" type="text" name="workspot[location]" id="location" value="<%= workspot.location %>"required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="image">Image URL</label>
-                    <input class="form-control" type="text" name="workspot[image]" id="image" value="<%= workspot.image %>">
+                    <input class="form-control" type="text" name="workspot[image]" id="image" value="<%= workspot.image %>"required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="price">One cup of coffee is:</label>
                     <div class="input-group">
                         <span class="input-group-text" id="price">$</span>
-                        <input type="text" class="form-control" name="workspot[price]" id="price" aria-label="price" aria-describedby="price-label" value="<%= workspot.price %>">
+                        <input type="text" class="form-control" name="workspot[price]" id="price" aria-label="price" aria-describedby="price-label" value="<%= workspot.price %>"required>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="description">Description</label>
-                    <textarea class="form-control" type="text" name="workspot[description]" id="description" ><%= workspot.description %></textarea>
+                    <textarea class="form-control" type="text" name="workspot[description]" id="description" required><%= workspot.description %></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
                 <div class="mb-3">
                     <button class="btn btn-info">Update Workspot</button>
