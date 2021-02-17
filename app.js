@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
+const { workspotSchema } = require('./joiSchemas')
 const catchAsync = require('./utilities/catchAsync');
 const ExpressError = require('./utilities/ExpressError');
 const methodOverride = require('method-override');
@@ -29,6 +30,16 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+const validateWorkspot = (req, res, next) => {
+    const { error } = workspotSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
+
 app.get('/', (req, res) => {
     res.render('home')
 });
@@ -42,8 +53,8 @@ app.get('/workspots/new', (req, res) => {
     res.render('workspots/new');
 });
 
-app.post('/workspots', catchAsync(async (req, res, next) => {
-    if(!req.body.workspot) throw new ExpressError('Invalid Workspot Data', 400)
+app.post('/workspots', validateWorkspot, catchAsync(async (req, res, next) => {
+    //if(!req.body.workspot) throw new ExpressError('Invalid Workspot Data', 400)
     const workspot = new Workspot(req.body.workspot);
     await workspot.save();
     res.redirect(`/workspots/${workspot._id}`)
@@ -59,7 +70,7 @@ app.get('/workspots/:id/edit', catchAsync(async (req, res) => {
     res.render('workspots/edit', { workspot });
 }));
 
-app.put('/workspots/:id', catchAsync(async (req, res) => {
+app.put('/workspots/:id', validateWorkspot, catchAsync(async (req, res) => {
     const { id } = req.params;
     const workspot = await Workspot.findByIdAndUpdate(id, { ...req.body.workspot });
     res.redirect(`/workspots/${workspot._id}`);
