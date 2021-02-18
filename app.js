@@ -99,7 +99,14 @@ app.post('/workspots/:id/reviews', validateReview, catchAsync(async (req, res) =
    await review.save();
    await workspot.save();
    res.redirect(`/workspots/${workspot._id}`);
-})) 
+}));
+
+app.delete('/workspots/:id/reviews/:reviewId', catchAsync(async (req, res) => {
+    const { id, reviewId } = req.params;
+    await Workspot.findByIdAndUpdate(id, { $pull: { reviews: reviewId } })
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/workspots/${id}`);
+}))
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
