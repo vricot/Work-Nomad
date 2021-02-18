@@ -72,7 +72,7 @@ app.post('/workspots', validateWorkspot, catchAsync(async (req, res, next) => {
 }))
 
 app.get('/workspots/:id', catchAsync(async (req, res) => {
-    const workspot = await Workspot.findById(req.params.id)
+    const workspot = await Workspot.findById(req.params.id).populate('reviews');
     res.render('workspots/show', { workspot });
 }));
 
