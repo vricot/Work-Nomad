@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
-const { workspotSchema } = require('./joiSchemas')
+const { workspotSchema, reviewSchema } = require('./joiSchemas')
 const catchAsync = require('./utilities/catchAsync');
 const ExpressError = require('./utilities/ExpressError');
 const methodOverride = require('method-override');
@@ -33,6 +33,16 @@ app.use(methodOverride('_method'));
 
 const validateWorkspot = (req, res, next) => {
     const { error } = workspotSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
+
+const validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
     if(error){
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
@@ -83,7 +93,7 @@ app.delete('/workspots/:id', catchAsync(async (req, res) => {
      res.redirect('/workspots');
 }));
 
-app.post('/workspots/:id/reviews', catchAsync(async (req, res) => {
+app.post('/workspots/:id/reviews', validateReview, catchAsync(async (req, res) => {
    const workspot = await Workspot.findById(req.params.id);const review = new Review(req.body.review);
    workspot.reviews.push(review);
    await review.save();
