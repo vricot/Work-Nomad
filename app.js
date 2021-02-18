@@ -8,6 +8,7 @@ const ExpressError = require('./utilities/ExpressError');
 const methodOverride = require('method-override');
 const Workspot = require('./models/workspot');
 const { stat } = require('fs');
+const Review = require('./models/review');
 
 mongoose.connect('mongodb://localhost:27017/work-nomad', {
     useNewUrlParser: true,
@@ -81,6 +82,14 @@ app.delete('/workspots/:id', catchAsync(async (req, res) => {
      await Workspot.findByIdAndDelete(id);
      res.redirect('/workspots');
 }));
+
+app.post('/workspots/:id/reviews', catchAsync(async (req, res) => {
+   const workspot = await Workspot.findById(req.params.id);const review = new Review(req.body.review);
+   workspot.reviews.push(review);
+   await review.save();
+   await workspot.save();
+   res.redirect(`/workspots/${workspot._id}`);
+})) 
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
