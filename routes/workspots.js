@@ -30,6 +30,7 @@ router.post('/', validateWorkspot, catchAsync(async (req, res, next) => {
     //if(!req.body.workspot) throw new ExpressError('Invalid Workspot Data', 400)
     const workspot = new Workspot(req.body.workspot);
     await workspot.save();
+    req.flash('success', 'Successfully added a new workspot!')
     res.redirect(`/workspots/${workspot._id}`)
 }))
 
