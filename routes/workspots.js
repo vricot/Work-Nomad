@@ -30,7 +30,7 @@ router.post('/', validateWorkspot, catchAsync(async (req, res, next) => {
     //if(!req.body.workspot) throw new ExpressError('Invalid Workspot Data', 400)
     const workspot = new Workspot(req.body.workspot);
     await workspot.save();
-    req.flash('success', 'Successfully added a new workspot!')
+    req.flash('success', 'Successfully added new workspot!')
     res.redirect(`/workspots/${workspot._id}`)
 }))
 
@@ -53,6 +53,7 @@ router.put('/:id', validateWorkspot, catchAsync(async (req, res) => {
 router.delete('/:id', catchAsync(async (req, res) => {
      const { id } = req.params;
      await Workspot.findByIdAndDelete(id);
+     req.flash('success', 'Successfully deleted workspot');
      res.redirect('/workspots');
 }));
 
