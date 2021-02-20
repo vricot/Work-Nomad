@@ -36,11 +36,19 @@ router.post('/', validateWorkspot, catchAsync(async (req, res, next) => {
 
 router.get('/:id', catchAsync(async (req, res) => {
     const workspot = await Workspot.findById(req.params.id).populate('reviews');
+    if(!workspot) {
+        req.flash('error', 'Cannot find that workspot!')
+        return res.redirect('/workspots');
+    }
     res.render('workspots/show', { workspot });
 }));
 
 router.get('/:id/edit', catchAsync(async (req, res) => {
     const workspot = await Workspot.findById(req.params.id)
+    if(!workspot) {
+        req.flash('error', 'Cannot find that workspot!')
+        return res.redirect('/workspots');
+    }
     res.render('workspots/edit', { workspot });
 }));
 
