@@ -28,15 +28,16 @@ router.get('/new', isLoggedIn, (req, res) => {
 });
 
 router.post('/', isLoggedIn, validateWorkspot, catchAsync(async (req, res, next) => {
-    //if(!req.body.workspot) throw new ExpressError('Invalid Workspot Data', 400)
     const workspot = new Workspot(req.body.workspot);
+    workspot.author = req.user._id;
     await workspot.save();
     req.flash('success', 'Successfully added new workspot!')
     res.redirect(`/workspots/${workspot._id}`)
 }))
 
 router.get('/:id', catchAsync(async (req, res) => {
-    const workspot = await Workspot.findById(req.params.id).populate('reviews');
+    const workspot = await Workspot.findById(req.params.id).populate('reviews').populate('author');
+    console.log(workspot);
     if(!workspot) {
         req.flash('error', 'Cannot find that workspot!')
         return res.redirect('/workspots');
@@ -55,7 +56,13 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
 
 router.put('/:id', validateWorkspot, catchAsync(async (req, res) => {
     const { id } = req.params;
-    const workspot = await Workspot.findByIdAndUpdate(id, { ...req.body.workspot });
+    //find out why user in req.user._id is undefined
+    const workspot = await Workspot.findById(id);
+    if (!workspot.author.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to do that!');
+        return res.redirect(`/workspots/${id}`);
+    }
+    const work = await Workspot.findByIdAndUpdate(id, { ...req.body.workspot });
     res.redirect(`/workspots/${workspot._id}`);
 }));
 
