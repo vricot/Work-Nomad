@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const catchAsync = require('../utilities/catchAsync');
 const { workspotSchema } = require('../joiSchemas');
+const { isLoggedIn } = require('../middleware');
 
 const ExpressError = require('../utilities/ExpressError');
 const Workspot = require('../models/workspot');
@@ -22,11 +23,11 @@ router.get('/', catchAsync(async (req, res) => {
     res.render('workspots/index', { allWorkspots })
 }));
 
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     res.render('workspots/new');
 });
 
-router.post('/', validateWorkspot, catchAsync(async (req, res, next) => {
+router.post('/', isLoggedIn, validateWorkspot, catchAsync(async (req, res, next) => {
     //if(!req.body.workspot) throw new ExpressError('Invalid Workspot Data', 400)
     const workspot = new Workspot(req.body.workspot);
     await workspot.save();
