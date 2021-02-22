@@ -7,9 +7,13 @@ const flash = require('connect-flash');
 const ExpressError = require('./utilities/ExpressError');
 const methodOverride = require('method-override');
 const { stat } = require('fs');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 
-const workspots = require('./routes/workspots');
-const reviews = require('./routes/reviews')
+const userRoutes = require('./routes/users')
+const workspotRoutes = require('./routes/workspots');
+const reviewRoutes = require('./routes/reviews')
 
 mongoose.connect('mongodb://localhost:27017/work-nomad', {
     useNewUrlParser: true,
@@ -47,14 +51,22 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 })
 
-app.use('/workspots', workspots)
-app.use('/workspots/:id/reviews', reviews)
+app.use('/', userRoutes);
+app.use('/workspots', workspotRoutes)
+app.use('/workspots/:id/reviews', reviewRoutes)
 
 app.get('/', (req, res) => {
     res.render('home')
