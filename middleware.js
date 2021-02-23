@@ -1,6 +1,7 @@
 const { workspotSchema, reviewSchema } = require('./joiSchemas');
 const ExpressError = require('./utilities/ExpressError');
 const Workspot = require('./models/workspot');
+const Review = require('./models/review');
 
 
  module.exports.isLoggedIn = (req, res, next) => {
@@ -27,6 +28,16 @@ module.exports.isAuthor = async(req, res, next) => {
     const { id } = req.params;
     const workspot = await Workspot.findById(id);
     if (!workspot.author.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to do that!');
+        return res.redirect(`/workspots/${id}`);
+    }
+    next();
+}
+
+module.exports.isReviewAuthor = async(req, res, next) => {
+    const { id, reviewId } = req.params;
+    const review = await Review.findById(reviewId);
+    if (!review.author.equals(req.user._id)) {
         req.flash('error', 'You do not have permission to do that!');
         return res.redirect(`/workspots/${id}`);
     }
