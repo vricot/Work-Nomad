@@ -6,18 +6,17 @@ const { isLoggedIn, isAuthor, validateWorkspot } = require('../middleware');
 
 const Workspot = require('../models/workspot');
 
-router.get('/', catchAsync(workspots.index));
+router.route('/')
+    .get(catchAsync(workspots.index))
+    .post(isLoggedIn, validateWorkspot, catchAsync(workspots.createWorkspot));
 
 router.get('/new', isLoggedIn, workspots.renderNewForm);
 
-router.post('/', isLoggedIn, validateWorkspot, catchAsync(workspots.createWorkspot));
-
-router.get('/:id', catchAsync(workspots.showWorkspot));
+router.route('/:id')
+    .get(catchAsync(workspots.showWorkspot))
+    .put(isLoggedIn, isAuthor, validateWorkspot, catchAsync(workspots.updateWorkspot))
+    .delete(isLoggedIn, isAuthor, catchAsync(workspots.deleteWorkspot));
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(workspots.renderEditForm));
-
-router.put('/:id', isLoggedIn, isAuthor, validateWorkspot, catchAsync(workspots.updateWorkspot));
-
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(workspots.deleteWorkspot));
 
 module.exports = router;
