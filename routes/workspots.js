@@ -1,22 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const catchAsync = require('../utilities/catchAsync');
-const { workspotSchema } = require('../joiSchemas');
-const { isLoggedIn } = require('../middleware');
+const { isLoggedIn, isAuthor, validateWorkspot } = require('../middleware');
 
-const ExpressError = require('../utilities/ExpressError');
 const Workspot = require('../models/workspot');
-
-
-const validateWorkspot = (req, res, next) => {
-    const { error } = workspotSchema.validate(req.body);
-    if(error){
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-}
 
 router.get('/', catchAsync(async (req, res) => {
     const allWorkspots = await Workspot.find({});
@@ -45,7 +32,8 @@ router.get('/:id', catchAsync(async (req, res) => {
     res.render('workspots/show', { workspot });
 }));
 
-router.get('/:id/edit', catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
+    const { id } = req.params;
     const workspot = await Workspot.findById(req.params.id)
     if(!workspot) {
         req.flash('error', 'Cannot find that workspot!')
@@ -54,19 +42,14 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
     res.render('workspots/edit', { workspot });
 }));
 
-router.put('/:id', validateWorkspot, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, isAuthor, validateWorkspot, catchAsync(async (req, res) => {
     const { id } = req.params;
-    const workspot = await Workspot.findById(id);
-    if (!workspot.author.equals(req.user._id)) {
-        req.flash('error', 'You do not have permission to do that!');
-        return res.redirect(`/workspots/${id}`);
-    }
-    const work = await Workspot.findByIdAndUpdate(id, { ...req.body.workspot });
+    const workspot = await Workspot.findByIdAndUpdate(id, { ...req.body.workspot });
     req.flash('success', 'Successfully updated workspot');
     res.redirect(`/workspots/${workspot._id}`);
 }));
 
-router.delete('/:id', catchAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
      const { id } = req.params;
      await Workspot.findByIdAndDelete(id);
      req.flash('success', 'Successfully deleted workspot');
