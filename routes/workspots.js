@@ -56,13 +56,13 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
 
 router.put('/:id', validateWorkspot, catchAsync(async (req, res) => {
     const { id } = req.params;
-    //find out why user in req.user._id is undefined
     const workspot = await Workspot.findById(id);
     if (!workspot.author.equals(req.user._id)) {
         req.flash('error', 'You do not have permission to do that!');
         return res.redirect(`/workspots/${id}`);
     }
     const work = await Workspot.findByIdAndUpdate(id, { ...req.body.workspot });
+    req.flash('success', 'Successfully updated workspot');
     res.redirect(`/workspots/${workspot._id}`);
 }));
 
