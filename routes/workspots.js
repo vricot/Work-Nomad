@@ -23,7 +23,12 @@ router.post('/', isLoggedIn, validateWorkspot, catchAsync(async (req, res, next)
 }))
 
 router.get('/:id', catchAsync(async (req, res) => {
-    const workspot = await Workspot.findById(req.params.id).populate('reviews').populate('author');
+    const workspot = await Workspot.findById(req.params.id).populate({
+        path: 'reviews',
+        populate: {
+            path: 'author'
+        }
+    }).populate('author');
     console.log(workspot);
     if(!workspot) {
         req.flash('error', 'Cannot find that workspot!')
