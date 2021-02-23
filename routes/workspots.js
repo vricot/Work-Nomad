@@ -1,64 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const workspots = require('../controllers/workspots');
 const catchAsync = require('../utilities/catchAsync');
 const { isLoggedIn, isAuthor, validateWorkspot } = require('../middleware');
 
 const Workspot = require('../models/workspot');
 
-router.get('/', catchAsync(async (req, res) => {
-    const allWorkspots = await Workspot.find({});
-    res.render('workspots/index', { allWorkspots })
-}));
+router.get('/', catchAsync(workspots.index));
 
-router.get('/new', isLoggedIn, (req, res) => {
-    res.render('workspots/new');
-});
+router.get('/new', isLoggedIn, workspots.renderNewForm);
 
-router.post('/', isLoggedIn, validateWorkspot, catchAsync(async (req, res, next) => {
-    const workspot = new Workspot(req.body.workspot);
-    workspot.author = req.user._id;
-    await workspot.save();
-    req.flash('success', 'Successfully added new workspot!')
-    res.redirect(`/workspots/${workspot._id}`)
-}))
+router.post('/', isLoggedIn, validateWorkspot, catchAsync(workspots.createWorkspot));
 
-router.get('/:id', catchAsync(async (req, res) => {
-    const workspot = await Workspot.findById(req.params.id).populate({
-        path: 'reviews',
-        populate: {
-            path: 'author'
-        }
-    }).populate('author');
-    console.log(workspot);
-    if(!workspot) {
-        req.flash('error', 'Cannot find that workspot!')
-        return res.redirect('/workspots');
-    }
-    res.render('workspots/show', { workspot });
-}));
+router.get('/:id', catchAsync(workspots.showWorkspot));
 
-router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const workspot = await Workspot.findById(req.params.id)
-    if(!workspot) {
-        req.flash('error', 'Cannot find that workspot!')
-        return res.redirect('/workspots');
-    }
-    res.render('workspots/edit', { workspot });
-}));
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(workspots.renderEditForm));
 
-router.put('/:id', isLoggedIn, isAuthor, validateWorkspot, catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const workspot = await Workspot.findByIdAndUpdate(id, { ...req.body.workspot });
-    req.flash('success', 'Successfully updated workspot');
-    res.redirect(`/workspots/${workspot._id}`);
-}));
+router.put('/:id', isLoggedIn, isAuthor, validateWorkspot, catchAsync(workspots.updateWorkspot));
 
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
-     const { id } = req.params;
-     await Workspot.findByIdAndDelete(id);
-     req.flash('success', 'Successfully deleted workspot');
-     res.redirect('/workspots');
-}));
+router.delete('/:id', isLoggedIn, isAuthor, catchAsync(workspots.deleteWorkspot));
 
 module.exports = router;
