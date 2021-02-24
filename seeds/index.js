@@ -28,9 +28,23 @@ const seedDB = async () => {
             author: '6033e115924b92dfa952197e',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
-            image: 'https://source.unsplash.com/collection/81925701',
+            
             description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque laboriosam totam delectus nesciunt repellendus ut quod similique nostrum accusamus veniam dicta at optio itaque tempora amet quo eaque, nulla obcaecati!',
-            price
+            price,
+            images: [
+                    {
+                      url: 'https://res.cloudinary.com/dsvwzfjnd/image/upload/v1614198942/WorkNomad/iez8ikkry738sxkptxcx.jpg',
+                      filename: 'WorkNomad/iez8ikkry738sxkptxcx'
+                    },
+                    {
+                      url: 'https://res.cloudinary.com/dsvwzfjnd/image/upload/v1614198942/WorkNomad/o5v96zoi2rg3f5bk1nlk.jpg',
+                      filename: 'WorkNomad/o5v96zoi2rg3f5bk1nlk'
+                    },
+                    {
+                      url: 'https://res.cloudinary.com/dsvwzfjnd/image/upload/v1614198941/WorkNomad/ei3azstpgqz0vpwruonq.jpg',
+                      filename: 'WorkNomad/ei3azstpgqz0vpwruonq'
+                    }
+                ]
         })
         await workspot.save();
     }
