@@ -9,8 +9,10 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
     cloudinary,
-    folder: 'WorkNomad',
-    allowedFormats: ['jpeg', 'png', 'jpg']
+    params: {
+        folder: 'WorkNomad',
+        allowedFormats: ['jpeg', 'png', 'jpg']
+    }
 });
 
 module.exports = {
