@@ -11,12 +11,8 @@ const Workspot = require('../models/workspot');
 
 router.route('/')
     .get(catchAsync(workspots.index))
-    // .post(isLoggedIn, validateWorkspot, catchAsync(workspots.createWorkspot));
-    .post(upload.array('image'), (req, res) => {
-        console.log(req.body, req.files);
-        res.send("IT WORKEDDDD!!!")
-    })
-
+    .post(isLoggedIn, upload.array('image'), validateWorkspot, catchAsync(workspots.createWorkspot));
+  
 router.get('/new', isLoggedIn, workspots.renderNewForm);
 
 router.route('/:id')
