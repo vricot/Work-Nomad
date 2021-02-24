@@ -11,8 +11,10 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createWorkspot = async (req, res, next) => {
     const workspot = new Workspot(req.body.workspot);
+    workspot.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     workspot.author = req.user._id;
     await workspot.save();
+    console.log(workspot);
     req.flash('success', 'Successfully added new workspot!')
     res.redirect(`/workspots/${workspot._id}`)
 }
