@@ -1,4 +1,5 @@
 const Workspot = require('../models/workspot');
+const { cloudinary } = require('../cloudinary');
 
 module.exports.index = async (req, res) => {
     const allWorkspots = await Workspot.find({});
@@ -45,10 +46,18 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateWorkspot = async (req, res) => {
     const { id } = req.params;
+    console.log(req.body);
     const workspot = await Workspot.findByIdAndUpdate(id, { ...req.body.workspot });
     const imgs =  req.files.map(f => ({ url: f.path, filename: f.filename }));
     workspot.images.push(...imgs);
     await workspot.save();
+    if (req.body.deleteImages) {
+        for(let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename);
+        }
+        await workspot.updateOne({$pull: {images: {filename: {$in: req.body.deleteImages}}}})
+        console.log(workspot);
+    }
     req.flash('success', 'Successfully updated workspot');
     res.redirect(`/workspots/${workspot._id}`);
 }
