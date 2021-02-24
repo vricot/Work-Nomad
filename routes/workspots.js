@@ -17,7 +17,7 @@ router.get('/new', isLoggedIn, workspots.renderNewForm);
 
 router.route('/:id')
     .get(catchAsync(workspots.showWorkspot))
-    .put(isLoggedIn, isAuthor, validateWorkspot, catchAsync(workspots.updateWorkspot))
+    .put(isLoggedIn, isAuthor, upload.array('image'), validateWorkspot, catchAsync(workspots.updateWorkspot))
     .delete(isLoggedIn, isAuthor, catchAsync(workspots.deleteWorkspot));
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(workspots.renderEditForm));

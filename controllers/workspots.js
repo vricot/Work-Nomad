@@ -46,6 +46,9 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateWorkspot = async (req, res) => {
     const { id } = req.params;
     const workspot = await Workspot.findByIdAndUpdate(id, { ...req.body.workspot });
+    const imgs =  req.files.map(f => ({ url: f.path, filename: f.filename }));
+    workspot.images.push(...imgs);
+    await workspot.save();
     req.flash('success', 'Successfully updated workspot');
     res.redirect(`/workspots/${workspot._id}`);
 }
