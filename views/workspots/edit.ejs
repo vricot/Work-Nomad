@@ -18,10 +18,6 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="image">Add Images</label>
-                    <input type="file" name="image" id="image" multiple>
-                </div>
-                <div class="mb-3">
                     <label class="form-label" for="price">One cup of coffee is:</label>
                     <div class="input-group">
                         <span class="input-group-text" id="price">$</span>
@@ -33,6 +29,12 @@
                     <textarea class="form-control" type="text" name="workspot[description]" id="description" required><%= workspot.description %></textarea>
                     <div class="valid-feedback">
                         Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="image" name="image" multiple>
+                        <label class="custom-file-label" for="image">Add more images...</label>
                     </div>
                 </div>
                 <div class="mb-3">
