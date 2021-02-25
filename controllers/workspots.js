@@ -1,4 +1,7 @@
 const Workspot = require('../models/workspot');
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({ accessToken: mapBoxToken })
 const { cloudinary } = require('../cloudinary');
 
 module.exports.index = async (req, res) => {
@@ -11,7 +14,12 @@ module.exports.renderNewForm = (req, res) => {
 }
 
 module.exports.createWorkspot = async (req, res, next) => {
+    const geoData = await geocoder.forwardGeocode({
+        query: req.body.workspot.location,
+        limit: 1
+    }).send()
     const workspot = new Workspot(req.body.workspot);
+    workspot.geometry = geoData.body.features[0].geometry;
     workspot.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     workspot.author = req.user._id;
     await workspot.save();

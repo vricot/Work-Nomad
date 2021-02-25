@@ -7,7 +7,11 @@
             <div class="card mb-3">
                 <div class="row">
                     <div class="col-md-4">
+                       <% if (workspot.images.length) { %> 
                         <img src="<%=workspot.images[0].url%>" alt="" class="img-fluid">
+                        <% } else { %>
+                            <img src="https://res.cloudinary.com/dsvwzfjnd/image/upload/v1614276033/WorkNomad/default-img_n5ymrq.jpg" alt="" class="img-fluid">
+                            <% } %>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
