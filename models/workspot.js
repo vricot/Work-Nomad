@@ -11,6 +11,8 @@ ImageSchema.virtual('thumbnail').get(function() {
     return this.url.replace('/upload', '/upload/w_200');
 })
 
+const opts = { toJSON: { virtuals: true } };
+
 const WorkspotSchema = new Schema({
     title: String,
     images: [ImageSchema],
@@ -39,7 +41,14 @@ const WorkspotSchema = new Schema({
             ref: 'Review'
         }
     ]
-});
+}, opts);
+
+WorkspotSchema.virtual('properties.popUpMarkup').get(function() {
+    return `
+    <strong><a href="/workspots/${this._id}">${this.title}</a></strong>
+    <p>${this.description.substring(0, 20)}...</p>` 
+})
+
 
 WorkspotSchema.post('findOneAndDelete', async function (doc) {
     if(doc){

@@ -21,7 +21,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
     await Workspot.deleteMany({});
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 300; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 2.5) + 1;
         const workspot = new Workspot({
@@ -32,11 +32,15 @@ const seedDB = async () => {
             description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque laboriosam totam delectus nesciunt repellendus ut quod similique nostrum accusamus veniam dicta at optio itaque tempora amet quo eaque, nulla obcaecati!',
             price,
             geometry: { 
-                "type" : "Point", "coordinates" : [ -122.3301, 47.6038 ]
+                "type" : "Point", 
+                "coordinates" : [
+                  cities[random1000].longitude,
+                  cities[random1000].latitude
+                ]
             },
             images: [
                     {
-                      url: 'https://res.cloudinary.com/dsvwzfjnd/image/upload/v1614198942/WorkNomad/iez8ikkry738sxkptxcx.jpg',
+                      url: 'https://res.cloudinary.com/dsvwzfjnd/image/upload/v1614276033/WorkNomad/default-img_n5ymrq.jpg',
                       filename: 'WorkNomad/iez8ikkry738sxkptxcx'
                     },
                     {
