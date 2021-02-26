@@ -5,6 +5,12 @@ body {
     background-size: cover;
     background-position: center;
 }
+
+main {
+    position: relative;
+    top: 25vh;
+}
+
 .cover-container {
     max-width: 60vw;
     position: relative;
