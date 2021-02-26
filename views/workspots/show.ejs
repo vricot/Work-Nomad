@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-6">
-      <div id='map' style='width: 400px; height: 300px;'></div>
+     
       <div id="workspotCarousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <% workspot.images.forEach((img, i) => { %>
@@ -44,6 +44,7 @@
           </div>
     </div>
     <div class="col-6">
+      <div id="map"></div>
       <% if (currentUser) {%>
       <h2>Leave A Review</h2>
       <form action="/workspots/<%=workspot._id%>/reviews" method="POST" class="mb-3 validated-form" novalidate>
