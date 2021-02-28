@@ -9,6 +9,8 @@ module.exports.index = async (req, res) => {
     res.render('workspots/index', { allWorkspots })
 }
 
+//refer to screenshot for paginated index function
+
 module.exports.renderNewForm = (req, res) => {
     res.render('workspots/new');
 }
