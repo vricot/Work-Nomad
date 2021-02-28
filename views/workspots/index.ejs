@@ -1,8 +1,10 @@
 <% layout('layouts/boilerplate')%>
-<div id="cluster-map"></div>
-    <h1>All Workspots</h1>
-    <div>
-        <a href="/workspots/new">Add A Workspot</a>
+<div class="container mb-3">
+    <div id="cluster-map" class="index-map"></div>
+</div>
+    <h1 class="index-title">All Workspots</h1>
+    <div class="container mb-3">
+        <a href="/workspots/new" class="btn btn-large btn-info" id="add-btn">Add A Workspot</a>
     </div>
         <% for (let workspot of allWorkspots) {%>
             <div class="card mb-3">
@@ -21,7 +23,7 @@
                             <p class="card-text">
                                 <small class="text-muted"><%=workspot.location%></small>
                             </p>
-                            <a class="btn btn-primary" href="/workspots/<%=workspot._id%>">View <%= workspot.title %></a>
+                            <a id="view-btn" class="btn btn-primary" href="/workspots/<%=workspot._id%>">View <%= workspot.title %></a>
                         </div>
                     </div>
                 </div>
@@ -33,3 +35,4 @@
     const workspots = { features: <%- JSON.stringify(allWorkspots) %>}
 </script>
 <script src="/js/clusterMap.js"></script>
+    

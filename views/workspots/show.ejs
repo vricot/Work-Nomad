@@ -46,7 +46,7 @@
     <div class="col-md-6">
       <div id="map"></div>
       <% if (currentUser) {%>
-      <h2>Leave A Review</h2>
+      <h2 id="leave-review">Leave A Review</h2>
       <form action="/workspots/<%=workspot._id%>/reviews" method="POST" class="mb-3 validated-form" novalidate>
         <div>
           <fieldset class="starability-basic">
@@ -64,7 +64,7 @@
           </fieldset>
         </div>
         <div class="mb-3">
-          <label class="form-label" for="body">Review</label>
+          <label class="form-label" for="body" id="review-label">Review</label>
           <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
           <div class="valid-feedback">
             Looks good!
