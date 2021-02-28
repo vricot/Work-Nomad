@@ -8,7 +8,11 @@
     height: 300px;
 }
 
-.img-size {
-    max-height: 300px;
-    max-width: 300px;
+.carousel-img-wrapper {
+    width: 500px;
+    height: 500px;
+}
+
+.carousel-img {
+    overflow: hidden;
 }
