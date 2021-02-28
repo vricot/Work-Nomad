@@ -8,11 +8,8 @@
     height: 300px;
 }
 
-.carousel-img-wrapper {
-    width: 500px;
-    height: 500px;
-}
-
-.carousel-img {
-    overflow: hidden;
+.img-size {
+    object-fit: cover;
+    width: 100%;
+    height: 400px;
 }

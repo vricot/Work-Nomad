@@ -2,13 +2,13 @@
 <link rel="stylesheet" href="/css/stars.css">
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
      
       <div id="workspotCarousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <% workspot.images.forEach((img, i) => { %>
-          <div class="carousel-item <%= i === 0 ? 'active' : ''%> carousel-img-wrapper">
-            <img src="<%= img.url %>" class="d-block w-100 carousel-img" alt="">
+          <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+            <img src="<%= img.url %>" class="d-block w-100 img-size" alt="">
           </div>
           <% }) %>
         </div>
@@ -43,7 +43,7 @@
             <% } %>
           </div>
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
       <div id="map"></div>
       <% if (currentUser) {%>
       <h2>Leave A Review</h2>
