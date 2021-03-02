@@ -5,11 +5,24 @@ const geocoder = mbxGeocoding({ accessToken: mapBoxToken })
 const { cloudinary } = require('../cloudinary');
 
 module.exports.index = async (req, res) => {
+    let perPage = 8;
+    let pageQuery = parseInt(req.query.page);
+    let pageNumber = pageQuery ? pageQuery : 1;
     const allWorkspots = await Workspot.find({});
-    res.render('workspots/index', { allWorkspots })
+    Workspot.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allWorkspots) {
+        Workspot.countDocuments().exec(function (err, count) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render('workspots/index', { allWorkspots,
+                current: pageNumber,
+                pages: Math.ceil(count / perPage) 
+            });
+            }
+        })
+    })
+    
 }
-
-//refer to screenshot for paginated index function
 
 module.exports.renderNewForm = (req, res) => {
     res.render('workspots/new');
@@ -19,13 +32,12 @@ module.exports.createWorkspot = async (req, res, next) => {
     const geoData = await geocoder.forwardGeocode({
         query: req.body.workspot.location,
         limit: 1
-    }).send()
+    }).send();
     const workspot = new Workspot(req.body.workspot);
     workspot.geometry = geoData.body.features[0].geometry;
     workspot.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     workspot.author = req.user._id;
     await workspot.save();
-    console.log(workspot);
     req.flash('success', 'Successfully added new workspot!')
     res.redirect(`/workspots/${workspot._id}`)
 }
@@ -41,6 +53,7 @@ module.exports.showWorkspot = async (req, res) => {
         req.flash('error', 'Cannot find that workspot!')
         return res.redirect('/workspots');
     }
+    console.log(workspot);
     res.render('workspots/show', { workspot });
 }
 
