@@ -26,7 +26,7 @@ const seedDB = async () => {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 2.5) + 1;
         const workspot = new Workspot({
-            author: "60426b53a1058539680fbe96",
+            author: "603a91c6e985463673231fae",
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             
