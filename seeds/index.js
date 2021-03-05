@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const cities = require('./cities');
 const {places, descriptors} = require('./seedHelpers');
 const Workspot = require('../models/workspot');
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/work-nomad';
+const dbUrl = process.env.DB_URL;
+
+//'mongodb://localhost:27017/work-nomad'
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
