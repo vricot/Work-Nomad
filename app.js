@@ -27,7 +27,7 @@ const MongoDBStore = require('connect-mongo').default;
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/work-nomad';
 
-mongoose.connect(dbUrl, {
+mongoose.connect('mongodb://localhost:27017/work-nomad', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
