@@ -1,3 +1,21 @@
+/* Navigation Bar */
+
+.navbar {
+    background-color: rgb(78, 25, 12);
+}
+
+/* Index Pagination */
+
+.page-link {
+    color: rgb(78, 25, 12);
+}
+
+.active a{
+    background-color: rgb(78, 25, 12) !important;
+}
+
+/* Cluster Map */
+
 #cluster-map {
     width: 100%;
     height: 500px;
@@ -7,6 +25,8 @@
     width: 100%;
     height: 300px;
 }
+
+/* Images */
 
 .img-size {
     object-fit: cover;
@@ -20,8 +40,10 @@
     height: 300px;
 }
 
+/* Index Page */
+
 #index-body {
-    background-image: url(https://images.unsplash.com/photo-1525034687081-c702010cb70d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80);
+    background-color: rgb(255, 250, 240);
 }
 
 .index-map {
@@ -29,18 +51,19 @@
 }
 
 .index-title {
-    color: white;
+    color: rgb(68, 28, 3);
+    text-align: center;
 }
 
 #add-btn {
-    background-color: white;
-    color: rgb(68, 28, 3);
+    /* background-color: rgb(141, 61, 42);;
+    color: rgba(255, 255, 255, 0.925); */
     font-weight: bold;
     border: none;
 }
 
 #add-btn:hover {
-    color: brown;
+    color: rgb(255, 255, 255);
 }
 
 #view-btn {
@@ -53,19 +76,29 @@
     color: white;
 }
 
+/* New Workspot Page */
+
 #new-workspot-h1 {
-    color: white;
+    color: rgb(68, 28, 3);
 }
 
 #add-page-btn {
     width: 100%;
 }
 
+/* Show Page */
+
 #leave-review {
-    color: white;
+    color: rgb(68, 28, 3);
     margin-top: 1rem;
 }
 
 #review-label {
     color: white;
+}
+
+/* Edit Page */
+
+#edit-workspot {
+    color: rgb(68, 28, 3);
 }
