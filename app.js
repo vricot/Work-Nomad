@@ -25,7 +25,7 @@ const workspotRoutes = require('./routes/workspots');
 const reviewRoutes = require('./routes/reviews');
 const MongoDBStore = require('connect-mongo').default;
 
-const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/work-nomad';
 
 //'mongodb://localhost:27017/work-nomad'
 

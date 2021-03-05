@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const cities = require('./cities');
 const {places, descriptors} = require('./seedHelpers');
 const Workspot = require('../models/workspot');
-const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/work-nomad';
 
 //'mongodb://localhost:27017/work-nomad'
 
@@ -26,7 +26,7 @@ const seedDB = async () => {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 2.5) + 1;
         const workspot = new Workspot({
-            author: "603a91c6e985463673231fae",
+            author: "6042a00cb8fa7a00156f2a19",
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             
