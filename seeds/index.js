@@ -2,9 +2,13 @@ const mongoose = require('mongoose');
 const cities = require('./cities');
 const {places, descriptors} = require('./seedHelpers');
 const Workspot = require('../models/workspot');
-//const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/work-nomad';
 
-mongoose.connect('mongodb://localhost:27017/work-nomad', {
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/work-nomad';
+
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
@@ -24,7 +28,7 @@ const seedDB = async () => {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 2.5) + 1;
         const workspot = new Workspot({
-            author: "60426b53a1058539680fbe96",
+            author: "6043a8303be4b300155454d3",
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             
