@@ -1,0 +1,3 @@
+Welcome to WorkNomad, my app to track & review places to work remotely when you cannot work from home! As a freelancer who lives in NYC, notorious for closet-sized apartments, I've always wished that there was a Yelp just for finding good places to work at--so I made one! This app was created using MongoDB, Express, Node, Passport, Bootstrap 5, and more with help from Colt Steele's Web Developer Bootcamp. 
+
+Currently deployed via Heroku: worknomad.herokuapp.com! 
